@@ -29,7 +29,7 @@ const auth = (
                 errorMsg : null
             })
         case LOGIN_SUCCESS :
-            console.log('login success -------------------------- ok ok ')
+            console.log('login success -------------------------- ok ok ', action.token);
             return Object.assign({},state, {
                 token : action.token,
                 isAuthenticated: true,

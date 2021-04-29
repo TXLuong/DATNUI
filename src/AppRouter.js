@@ -11,7 +11,7 @@ export default function AppRouter() {
                 <Route path = '/admin'>
                     <Admin/>
                 </Route>
-                <Route path = '/'>
+                <Route path = '/login'>
                     <SignInContainer/>
                 </Route>
             </Switch>

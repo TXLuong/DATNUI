@@ -16,7 +16,7 @@ import {useState, useEffect} from "react";
 import avatar from "assets/img/faces/marc.jpg";
 import {authGet} from '../../api';
 import {useSelector, useDispatch} from "react-redux";
-
+import CamHtml from "components/Cam/CamHtml";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -41,25 +41,31 @@ const useStyles = makeStyles(styles);
 export default function UserProfile() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [fistname, setFistname] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastName, setLastName] = useState("");
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const classes = useStyles();
   const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
-  console.log("token de lay thong tin nguoi dung hien tai ", token);
   const getMonitor = ()=>{
     authGet(dispatch, token, "/monitor/current").then(
       res =>{
         console.log("res ---------- ", res);
+        if (res != null) {
+          setUsername(res.username);
+          // setPassword(res.password);
+          setFirstname(res.firstname);
+          setEmail(res.email);
+        }
       }
     );
   }
   useEffect(() =>{
     getMonitor();
-  },[])
+  },[]);
+  document.getElementById("mutualCamera").innerHTML = "<CamHtml/>" ;
   return (
     <div>
       <GridContainer>
@@ -73,7 +79,7 @@ export default function UserProfile() {
               <GridContainer>
                 <GridItem xs={12} sm={12} md={5}>
                   <CustomInput
-                    labelText="Apple Inc."
+                    labelText="Jmango ltd"
                     id="company-disabled"
                     formControlProps={{
                       fullWidth: true
@@ -85,16 +91,24 @@ export default function UserProfile() {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={3}>
                   <CustomInput
-                    labelText="Username"
+                    labelText="username"
                     id="username"
                     formControlProps={{
                       fullWidth: true
                     }}
-                  />
+                    inputProps = {
+                      {
+                        text: "usernamddddddddde"
+                      }
+                    }
+                    labelProps = {"acasc"}
+                  >
+                    Luonglllllllllllllll
+                  </CustomInput>
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText="Email address"
+                    labelText={email}
                     id="email-address"
                     formControlProps={{
                       fullWidth: true
@@ -105,7 +119,7 @@ export default function UserProfile() {
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
-                    labelText="First Name"
+                    labelText={firstname}
                     id="first-name"
                     formControlProps={{
                       fullWidth: true
@@ -114,7 +128,7 @@ export default function UserProfile() {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
-                    labelText="Last Name"
+                    labelText={lastName}
                     id="last-name"
                     formControlProps={{
                       fullWidth: true

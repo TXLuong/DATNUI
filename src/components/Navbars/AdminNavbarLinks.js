@@ -20,13 +20,19 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
-
+import {useSelector, useDispatch} from 'react-redux';
+import {authPost} from '../../api';
+import {Redirect} from 'react-router-dom';
 const useStyles = makeStyles(styles);
 
 export default function AdminNavbarLinks() {
+  var logouted = false;
   const classes = useStyles();
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
+  const token = useSelector(state => state.auth.token);
+  const dispatch = useDispatch();
+
   const handleClickNotification = event => {
     if (openNotification && openNotification.contains(event.target)) {
       setOpenNotification(null);
@@ -47,8 +53,14 @@ export default function AdminNavbarLinks() {
   const handleCloseProfile = () => {
     setOpenProfile(null);
   };
+  const handleLogout = () => {
+    authPost(dispatch, token, "/logout");
+    logouted = true;
+  }
   return (
-    <div>
+    logouted?(<Redirect to="/login"></Redirect>):
+    (
+      <div>
       <div className={classes.searchWrapper}>
         <CustomInput
           formControlProps={{
@@ -207,7 +219,7 @@ export default function AdminNavbarLinks() {
                     </MenuItem>
                     <Divider light />
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={handleLogout}
                       className={classes.dropdownItem}
                     >
                       Logout
@@ -220,5 +232,6 @@ export default function AdminNavbarLinks() {
         </Poppers>
       </div>
     </div>
+    )
   );
 }

@@ -34,17 +34,26 @@ export const login = (username, password) =>{
             body: body,
         })
         .then(response =>{
-            if(response.ok){
-                dispatch(success(response.headers.get("X-Auth-Token")));
-            }
-            else if (response.status === 401){
+            // save token from Server
+            console.log("response ------------------------  ", response.text.toString);
+            console.log("body ------------------------", response.body.getReader);
+            console.log("body ------------------------", JSON.stringify(response.headers))
+            console.log("headers ------------------------", response.headers);
+            console.log("tojson ------------------------", response.json.toString)
+            if (response.status === 401){
                 dispatch(failed(true, "Username or password is incorrect"));
                 errorNoti("Tài khoản hoặc mật khẩu không đúng");
             }
             return response.json();
         })
+        .then(
+            data =>
+                {   console.log("delicious onion ");
+                    console.log(data);
+                    dispatch(success(data.token));
+                }
+        )
         .then(response =>{
-
         },
         error =>{
 

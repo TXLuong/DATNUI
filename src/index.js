@@ -76,6 +76,7 @@ let middleware = [
 middleware = [...middleware, loggerMiddleware];
 var startState = {};
 if (localStorage.getItem("TOKEN") !== null && localStorage.getItem("TOKEN") !== "null"){
+  console.log("Not null token --------------------------------");
   startState = {
     auth : {
       token : localStorage.getItem("TOKEN"),
