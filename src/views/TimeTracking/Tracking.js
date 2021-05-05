@@ -34,6 +34,8 @@ export default function TrackingTime(){
     const history = useHistory();
     const [imageBase64, setImageBase64] = useState("");
     const [uriImagetest, setUriImagetest] = useState("");
+    
+    
     const openPopupWindow = () => {
       let windowObjectReference = window.open(
          history.location.pathname,

@@ -37,6 +37,7 @@ import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 import RTLPage from "views/RTLPage/RTLPage.js";
 import TrackingTime from './views/TimeTracking/Tracking';
+import WorkLog from "./views/workHistory/workLog";
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -68,7 +69,15 @@ const dashboardRoutes = [
     icon: AccessTimeIcon,
     component: TrackingTime,
     layout: "/admin"
+  },
+  {
+    path : "/history",
+    name : "Work history",
+    icon : AccessTimeIcon,
+    component : WorkLog,
+    layout : "/admin"
   }
+  
 
   // {
   //   path: "/typography",
