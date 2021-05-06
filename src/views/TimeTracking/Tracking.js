@@ -2,7 +2,7 @@ import Camera from '../../components/Cam/Camera';
 import React from 'react';
 import Button from '../../components/CustomButtons/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import CamHtml from '../../components/Cam/CamHtml';
 import authPost from '../../api';
 import NewWindow from 'react-new-window';
@@ -34,8 +34,6 @@ export default function TrackingTime(){
     const history = useHistory();
     const [imageBase64, setImageBase64] = useState("");
     const [uriImagetest, setUriImagetest] = useState("");
-    
-    
     const openPopupWindow = () => {
       let windowObjectReference = window.open(
          history.location.pathname,
@@ -68,6 +66,12 @@ export default function TrackingTime(){
         console.log("can not capture face ");
       }
     }
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setSeconds(seconds => seconds + 1);
+      }, 5*60*1000);
+      return () => clearInterval(interval);
+    }, []);
     
     return (
         <div className={classes.container}>

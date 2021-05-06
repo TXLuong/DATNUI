@@ -21,6 +21,9 @@ import Accessibility from "@material-ui/icons/Accessibility";
 import UserTable from '../../components/WorkLog/UserTable';
 import DateSelector from '../../components/WorkLog/DatePicker';
 import SeeButton from '../../components/WorkLog/SeeButton';
+import {authPost} from '../../api';
+import {useDispatch, useSelector} from 'react-redux'
+
 // thoi gian turn in 
 // thoi gian leave
 // thong ke theo ngay, tuan, thang, ngay cu the
@@ -42,11 +45,29 @@ export default function WorkLog(){
     const [timeOut, setTimeOut] = useState("null");
     const [day, setDay] = useState("null");
     const [id, setId] = useState("null");
+    const [from, setFrom] = useState("05/29/2021");
+    const [to, setTo] = useState("05/29/2021");
+    const token = useSelector(state => state.auth.token);
+    const dispatch = useDispatch();
 
     // nhan du lieu tu server 
     // truyen du lieu dang props vao trong usertable 
     // truyen 1 props nua la 1 callback, khi onlcick vao row thi hien thi ra 1 cai chart cua ngay hom do
-
+    const handleChangeDateFrom = (dateFrom) => {
+      setFrom(dateFrom);
+    };
+    const handleChangeDateTo = (dateTo) => {
+      setTo(dateTo);
+    }
+    const handleSeeHistory = async () => {
+      // send to server toke + dateFrom + dateTo
+      console.log(from + " " + to);
+      const body = {
+        "dateFrom": from,
+        "dateTo": to
+      }
+      authPost(dispatch, token,"/user/history",body);
+    }
     return (
         <div>
             <GridContainer>
@@ -132,11 +153,11 @@ export default function WorkLog(){
         </GridItem>
       </GridContainer>
       <div className = {classDate.listDate}>
-        <SeeButton></SeeButton>
-        <DateSelector label="From"/>
-        <DateSelector label="To"/>       
+        <SeeButton onClick={handleSeeHistory}>See history</SeeButton>
+        <DateSelector changeDate = {handleChangeDateFrom} label="From"/>
+        <DateSelector changeDate = {handleChangeDateTo} label="To"/>       
       </div>
-      <UserTable ></UserTable>
+      <UserTable></UserTable>
       </div>
     )
 }
