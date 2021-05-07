@@ -79,7 +79,7 @@ export default function WorkLog(){
               </CardIcon>
               <p className={classes.cardCategory}>Today</p>
               <h3 className={classes.cardTitle}>
-                49/50 <small>GB</small>
+                3/8 <small>hour</small>
               </h3>
             </CardHeader>
             {/* <CardFooter stats>

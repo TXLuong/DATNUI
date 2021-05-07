@@ -34,6 +34,7 @@ export default function TrackingTime(){
     const history = useHistory();
     const [imageBase64, setImageBase64] = useState("");
     const [uriImagetest, setUriImagetest] = useState("");
+    const [isTurnIn, setIsTurnIn] = useState(false);
     const openPopupWindow = () => {
       let windowObjectReference = window.open(
          history.location.pathname,
@@ -42,6 +43,7 @@ export default function TrackingTime(){
       );
     }
     const handleClick = async () => {
+      // turn in -> True
       console.log("request turning in","url/" + history.location.pathname);
       console.log(history);
       openPopupWindow();
@@ -65,17 +67,28 @@ export default function TrackingTime(){
       else {
         console.log("can not capture face ");
       }
+      setIsTurnIn(true);
     }
+    // o phia cam : cu 5p chup 1 cai anh 
+    // sau khi chup anh thi ngay lap tup truyen ve cho component cha la : TrackingTime
     useEffect(() => {
       const interval = setInterval(() => {
-        setSeconds(seconds => seconds + 1);
-      }, 5*60*1000);
+        //setSeconds(seconds => seconds + 1);
+        if(isTurnIn){
+          console.log("seconds");
+          // document.getElementById("cameraMan");
+          console.log(document.getElementById("cameraMan"));
+        }
+        else{
+          console.log("Chua bat dau");
+        }
+      }, 1000);
       return () => clearInterval(interval);
     }, []);
     
     return (
         <div className={classes.container}>
-            <CamHtml handleChangeImage = {(imageBase64) => {setImageBase64(imageBase64)}}/>  
+            <CamHtml id = "cameraMan" handleChangeImage = {(imageBase64) => {setImageBase64(imageBase64)}}/>  
             <img id = "imageface" src={imageBase64}></img>
             <img id = "resized" src = {uriImagetest}></img>
             <div>

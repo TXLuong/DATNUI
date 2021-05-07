@@ -25,6 +25,8 @@ import Notifications from "@material-ui/icons/Notifications";
 import Unarchive from "@material-ui/icons/Unarchive";
 import Language from "@material-ui/icons/Language";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import RestorePageIcon from '@material-ui/icons/RestorePage';
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
@@ -38,6 +40,7 @@ import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 import RTLPage from "views/RTLPage/RTLPage.js";
 import TrackingTime from './views/TimeTracking/Tracking';
 import WorkLog from "./views/workHistory/workLog";
+import AddEmployee from './views/AddEmployee/AddEmployee';
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -73,8 +76,15 @@ const dashboardRoutes = [
   {
     path : "/history",
     name : "Work history",
-    icon : AccessTimeIcon,
+    icon : RestorePageIcon,
     component : WorkLog,
+    layout : "/admin"
+  },
+  {
+    path : "/addEmployee",
+    name : "Add Employee",
+    icon : PersonAddIcon,
+    component : AddEmployee,
     layout : "/admin"
   }
   

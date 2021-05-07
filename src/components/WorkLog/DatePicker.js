@@ -45,4 +45,3 @@ DatePickers.propTypes = {
 };
 
 export default withStyles(styles)(DatePickers);
-				
