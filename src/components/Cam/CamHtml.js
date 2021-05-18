@@ -12,7 +12,8 @@ function CamHtml (props) {
   }
  
   return (
-    <Camera
+    <Camera 
+      id = "cam"
       onTakePhoto = { (dataUri) => { handleTakePhoto(dataUri); } }
     />
   );

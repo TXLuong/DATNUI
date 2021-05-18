@@ -125,7 +125,7 @@ export default function Admin({ ...rest }) {
         ) : (
           <div className={classes.map}>{switchRoutes}</div>
         )}
-        {getRoute() ? <Footer /> : null}
+        {getRoute() ? null : null}
         <FixedPlugin
           handleImageClick={handleImageClick}
           handleColorClick={handleColorClick}
