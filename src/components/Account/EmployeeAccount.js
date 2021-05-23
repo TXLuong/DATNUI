@@ -10,39 +10,38 @@ import {
   Grid,
   TextField
 } from '@material-ui/core';
+import { instanceOf } from 'prop-types';
 
-const states = [
-  {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  }
-];
 
 const AccountProfileDetails = (props) => {
+
   const [values, setValues] = useState({
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
-    state: 'Alabama',
-    country: 'USA'
   });
+  const handleFirstNameChange = (e) => {
+    setValues({...values, firstName : e.target.value});
+    let temp = {...values, firstName : e.target.value};
+    props.handleChildChanges(temp);
 
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
-  };
-
+  }
+  const handleLastNameChange = (e) => {
+    setValues({...values, lastName : e.target.value});
+    let temp = {...values, lastName : e.target.value};
+    props.handleChildChanges(temp);
+  }
+  const handleEmailChange = (e) => {
+    setValues({...values, email : e.target.value});
+    let temp = {...values, email : e.target.value};
+    props.handleChildChanges(temp);
+  }
+  const handlePhoneChange = (e) => {
+    setValues({...values, phone : e.target.value});
+    let temp = {...values, phone : e.target.value};
+    props.handleChildChanges(temp);
+  }
   return (
     <form
       autoComplete="off"
@@ -70,7 +69,7 @@ const AccountProfileDetails = (props) => {
                 // helperText="Please specify the first name"
                 label="First name"
                 name="firstName"
-                onChange={handleChange}
+                onChange={handleFirstNameChange}
                 required
                 value={values.firstName}
                 variant="outlined"
@@ -85,7 +84,7 @@ const AccountProfileDetails = (props) => {
                 fullWidth
                 label="Last name"
                 name="lastName"
-                onChange={handleChange}
+                onChange={handleLastNameChange}
                 required
                 value={values.lastName}
                 variant="outlined"
@@ -101,7 +100,7 @@ const AccountProfileDetails = (props) => {
                 label="Email Address"
                 helperText="Please specify the email"
                 name="email"
-                onChange={handleChange}
+                onChange={handleEmailChange}
                 required
                 value={values.email}
                 variant="outlined"
@@ -116,7 +115,7 @@ const AccountProfileDetails = (props) => {
                 fullWidth
                 label="Phone Number"
                 name="phone"
-                onChange={handleChange}
+                onChange={handlePhoneChange}
                 required
                 value={values.phone}
                 variant="outlined"

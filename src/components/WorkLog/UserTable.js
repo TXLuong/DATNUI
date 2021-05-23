@@ -29,12 +29,12 @@ const StyledTableRow = withStyles ((theme) => ({
 function createData (name, timeIn, timeOut, totalTime, day){
 	return {name, timeIn, timeOut, totalTime, day}
 }
-const rows = [
-	createData("Alex", "8h10", "18h10", "8h", "4-5-2021"),
-	createData("Alex", "8h10", "18h10", "8h", "4-5-2021"),
-	createData("Alex", "8h10", "18h10", "8h", "4-5-2021"),
-	createData("Alex", "8h10", "18h10", "8h", "4-5-2021")
-];
+// const rows = [
+// 	createData("Alex", "8h10", "18h10", "8h", "4-5-2021"),
+// 	createData("Alex", "8h10", "18h10", "8h", "4-5-2021"),
+// 	createData("Alex", "8h10", "18h10", "8h", "4-5-2021"),
+// 	createData("Alex", "8h10", "18h10", "8h", "4-5-2021")
+// ];
 
 const useStyles = makeStyles({
 	table : {
@@ -43,7 +43,7 @@ const useStyles = makeStyles({
 	,
 });
 
-export default function UserTable () {
+export default function UserTable (props) {
 	const classes = useStyles();
 	return (
 		 <TableContainer component={Paper}>
@@ -58,7 +58,7 @@ export default function UserTable () {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {props.rows.map((row) => (
             <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row">
                 {row.name}

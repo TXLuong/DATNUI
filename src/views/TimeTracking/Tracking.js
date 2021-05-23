@@ -90,13 +90,13 @@ export default function TrackingTime(){
         console.log(window.opener);
         console.log(window.top !== window.self);
         document.getElementById("captureButton").click();
-      },1000*60*5)
+      },1000*10)
     }, [])
     const openPopupWindow = () => {
       let windowObjectReference = window.open(
          history.location.pathname,
         "DescriptiveWindowName",
-        "resizable,scrollbars,status,width = 400, height =200"
+        "resizable,scrollbars,status,width = 400, height = 200"
       );
     }
     const handleClick = async () => {

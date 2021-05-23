@@ -41,6 +41,30 @@ import RTLPage from "views/RTLPage/RTLPage.js";
 import TrackingTime from './views/TimeTracking/Tracking';
 import WorkLog from "./views/workHistory/workLog";
 import AddEmployee from './views/AddEmployee/AddEmployee';
+const employeeRoutes = [
+  {
+    path: "/Tracking",
+    name: "Tracking time",
+    icon: AccessTimeIcon,
+    component: TrackingTime,
+    layout: "/employee"
+  },
+  {
+    path : "/history",
+    name : "Work history",
+    icon : RestorePageIcon,
+    component : WorkLog,
+    layout : "/employee"
+  },
+  {
+    path: "/employee",
+    name: "User Profile",
+    rtlName: "ملف تعريفي للمستخدم",
+    icon: Person,
+    component: UserProfile,
+    layout: "/employee"
+  },
+]
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -66,20 +90,20 @@ const dashboardRoutes = [
     component: UserProfile,
     layout: "/admin"
   },
-  {
-    path: "/Tracking",
-    name: "Tracking time",
-    icon: AccessTimeIcon,
-    component: TrackingTime,
-    layout: "/admin"
-  },
-  {
-    path : "/history",
-    name : "Work history",
-    icon : RestorePageIcon,
-    component : WorkLog,
-    layout : "/admin"
-  },
+  // {
+  //   path: "/Tracking",
+  //   name: "Tracking time",
+  //   icon: AccessTimeIcon,
+  //   component: TrackingTime,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path : "/history",
+  //   name : "Work history",
+  //   icon : RestorePageIcon,
+  //   component : WorkLog,
+  //   layout : "/admin"
+  // },
   {
     path : "/addEmployee",
     name : "Add Employee",
@@ -140,3 +164,4 @@ const dashboardRoutes = [
 ];
 
 export default dashboardRoutes;
+export {employeeRoutes};

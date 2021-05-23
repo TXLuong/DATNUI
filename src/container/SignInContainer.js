@@ -5,7 +5,8 @@ const mapStateToProps = state1 => ({ // query de lay ra cac state
     isAuthenticated: state1.auth.isAuthenticated,
     isRequest: state1.auth.isRequest,
     error: state1.auth.errorState,
-    errorMsg: state1.auth.errorMsg
+    errorMsg: state1.auth.errorMsg,
+    roleid : state1.auth.roleid
 });// dinh nghia state.auth trong reducers.auth
 
 const mapDispatchToProps = dispatch => ({

@@ -12,6 +12,7 @@ const auth = (
         isRequesting: false,
         errorState: false,
         errorMsg : null,
+        roleid : null
     },
     action
 ) => {
@@ -29,11 +30,12 @@ const auth = (
                 errorMsg : null
             })
         case LOGIN_SUCCESS :
-            console.log('login success -------------------------- ok ok ', action.token);
+            console.log('login success -------------------------- ok ok ', action);
             return Object.assign({},state, {
                 token : action.token,
                 isAuthenticated: true,
-                isRequesting: true
+                isRequesting: true, 
+                roleid : action.roleid
             })
         case LOGIN_FAILURE:
             return Object.assign({},state, {
@@ -42,6 +44,7 @@ const auth = (
                 errorState: state.errorState,
                 errorMsg: state.errorMsg 
             })
+        
         default :
             return state
     }

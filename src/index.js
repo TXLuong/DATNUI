@@ -81,6 +81,7 @@ if (localStorage.getItem("TOKEN") !== null && localStorage.getItem("TOKEN") !== 
     auth : {
       token : localStorage.getItem("TOKEN"),
       isAuthenticated : true,
+      roleid : localStorage.getItem("roleid"),
     },
   };
 }
@@ -89,6 +90,7 @@ else {
     auth : {
       token : null,
       isAuthenticated : false,
+      roleid : null,
     }
   }
 }
@@ -106,22 +108,9 @@ console.log(startState)
 store.subscribe(() => {
   console.log("log getState : " , store.getState());
   localStorage.setItem("TOKEN", store.getState().auth.token);
+  localStorage.setItem("roleid", store.getState().auth.roleid);
 });
 const hist = createBrowserHistory();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // ReactDOM.render(

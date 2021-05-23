@@ -1,5 +1,5 @@
 import React from 'react';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from "components/Card/Card.js";
@@ -23,7 +23,6 @@ import DateSelector from '../../components/WorkLog/DatePicker';
 import SeeButton from '../../components/WorkLog/SeeButton';
 import {authPost} from '../../api';
 import {useDispatch, useSelector} from 'react-redux'
-
 // thoi gian turn in 
 // thoi gian leave
 // thong ke theo ngay, tuan, thang, ngay cu the
@@ -45,10 +44,19 @@ export default function WorkLog(){
     const [timeOut, setTimeOut] = useState("null");
     const [day, setDay] = useState("null");
     const [id, setId] = useState("null");
-    const [from, setFrom] = useState("05/29/2021");
-    const [to, setTo] = useState("05/29/2021");
+    const [from, setFrom] = useState(new Date().toLocaleString().split(',')[0]);
+    const [to, setTo] = useState(new Date().toLocaleString().split(',')[0]);
     const token = useSelector(state => state.auth.token);
     const dispatch = useDispatch();
+    const createData =  (name, timeIn, timeOut, totalTime, day) => {
+      {name, timeIn, timeOut, totalTime, day}
+    }
+    const rows = [
+      createData("Alex", "8h10", "18h10", "8h", "4-5-2021"),
+      createData("Alex", "8h10", "18h10", "8h", "4-5-2021"),
+      createData("Alex", "8h10", "18h10", "8h", "4-5-2021"),
+      createData("Alex", "8h10", "18h10", "8h", "4-5-2021")
+    ];
 
     // nhan du lieu tu server 
     // truyen du lieu dang props vao trong usertable 
@@ -68,6 +76,19 @@ export default function WorkLog(){
       }
       authPost(dispatch, token,"/user/history",body);
     }
+    const sendToServerAndRender = async () => {
+      let data = {
+        "from" : from,
+        "to" : to
+      }
+      authPost(dispatch, token, "/user/seeWork", data);
+    }
+    useEffect(() => {
+      console.log(from + " " + to);
+      
+
+    }, []);
+
     return (
         <div>
             <GridContainer>
@@ -157,7 +178,7 @@ export default function WorkLog(){
         <DateSelector changeDate = {handleChangeDateFrom} label="From"/>
         <DateSelector changeDate = {handleChangeDateTo} label="To"/>       
       </div>
-      <UserTable></UserTable>
+      <UserTable rows = {rows}></UserTable>
       </div>
     )
 }

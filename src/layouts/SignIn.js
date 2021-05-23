@@ -76,15 +76,17 @@ export default function SignIn(props) {
     setPassword(e.target.value);
   }
   if(props.isAuthenticated === true) {
-    // props.getScreenSecurityInfo(history);
-    // if (history.location.state && history.location.state.from) {
-    //   history.replace(history.location.state.from);
-    //   return null;
-    // } else
-    //   return (
-    //     <Redirect to={{ pathname: "/", state: { from: history.location } }} />
-    //   );
-    return <Redirect to='/admin' /> 
+    console.log("----------------------------------------------------------------", props.roleid);
+    if(props.roleid == '1'){
+      return (
+        <Redirect to='/admin' />
+      )
+    }
+    else if (props.roleid == '2') {
+      return (
+        <Redirect to='/employee'/>
+      );
+    }
   }
   else return (
   <div className={classesForBackground.container}>

@@ -50,7 +50,7 @@ export const login = (username, password) =>{
             data =>
                 {   console.log("delicious onion ");
                     console.log(data);
-                    dispatch(success(data.token));
+                    dispatch(success(data));
                 }
         )
         .then(response =>{
@@ -67,12 +67,21 @@ const requesting = () => {
     }
 }
 
-const success = token => {// token la tham so cua success 
+const success = data => {// token la tham so cua success 
     return {
         type : LOGIN_SUCCESS,
-        token : token
+        token : data.token,
+        roleid : data.roleid
     }
 }
+
+const sucessRoleid = roleid => {
+    return {
+        type : ROLE_SUCCESS,
+        roleid : roleid
+    }
+}
+
 
 const logoutsuccess = token => {
     return {

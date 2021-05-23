@@ -38,13 +38,15 @@ import {
 } from "variables/charts.js";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
-
+import {useSelector} from 'react-redux';
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
+  const roleid =  useSelector(state => state.auth.roleid); 
   const classes = useStyles();
   return (
     <div>
+      {roleid}
     </div>
   );
 }
