@@ -39,13 +39,11 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function UserProfile() {
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [firstname, setFirstname] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [postalCode, setPostalCode] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [id, setId] = useState("");
+  const [role, setRole] = useState("");
   const classes = useStyles();
   const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
@@ -54,13 +52,22 @@ export default function UserProfile() {
       res =>{
         console.log("res ---------- ", res);
         if (res != null) {
-          setUsername(res.username);
-          // setPassword(res.password);
           setFirstname(res.firstname);
+          setLastname(res.lastname);
+          setId(res.id);
+          if(res.roleid == 1) {
+            setRole("Monitor");
+          }
+          else {
+            setRole("Employee");
+          }
           setEmail(res.email);
         }
       }
     );
+  }
+  const handleUpdate = () => {
+
   }
   useEffect(() =>{
     getMonitor();
@@ -79,71 +86,95 @@ export default function UserProfile() {
               <GridContainer>
                 <GridItem xs={12} sm={12} md={5}>
                   <CustomInput
-                    labelText="Jmango ltd"
+                    labelText="Organization"
                     id="company-disabled"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
-                      disabled: true
+                      disabled: true,
+                      value: "Hust"
                     }}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={3}>
                   <CustomInput
-                    labelText="username"
-                    id="username"
+                    labelText="Role"
+                    id="Role"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps = {
                       {
-                        text: "usernamddddddddde"
+                        value: role,
+                        disabled: true,
                       }
                     }
                     labelProps = {"acasc"}
+                   
                   >
-                    Luonglllllllllllllll
                   </CustomInput>
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText={email}
-                    id="email-address"
+                    labelText="ID"
+                    id="ID"
                     formControlProps={{
                       fullWidth: true
                     }}
+                    inputProps = {
+                      {
+                        value: id,
+                        disabled: true
+                      }
+                    }
                   />
                 </GridItem>
               </GridContainer>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
-                    labelText={firstname}
+                    labelText="First name"
                     id="first-name"
                     formControlProps={{
                       fullWidth: true
                     }}
+                    inputProps = {
+                      {
+                        value : firstname
+                      }
+                    }
+                    onChange={() => console.log("Role changed")}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
-                    labelText={lastName}
+                    labelText="Last name"
                     id="last-name"
                     formControlProps={{
                       fullWidth: true
                     }}
+                    inputProps = {
+                      {
+                        value : lastname
+                      }
+                    }
                   />
                 </GridItem>
               </GridContainer>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText="City"
-                    id="city"
+                    labelText="Email address"
+                    id="Email address"
                     formControlProps={{
                       fullWidth: true
                     }}
+                    inputProps = {
+                      {
+                        value : email
+                      }
+                    }
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
@@ -153,6 +184,12 @@ export default function UserProfile() {
                     formControlProps={{
                       fullWidth: true
                     }}
+                    inputProps = {
+                      {
+                        disabled: true,
+                        value: "Viet Nam"
+                      }
+                    }
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
@@ -162,6 +199,12 @@ export default function UserProfile() {
                     formControlProps={{
                       fullWidth: true
                     }}
+                    inputProps = {
+                      {
+                        disabled: true,
+                        value: "+84"
+                      }
+                    }
                   />
                 </GridItem>
               </GridContainer>
@@ -169,21 +212,23 @@ export default function UserProfile() {
                 <GridItem xs={12} sm={12} md={12}>
                   <InputLabel style={{ color: "#AAAAAA" }}>About me</InputLabel>
                   <CustomInput
-                    labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
+                    labelText="Introduction"
                     id="about-me"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
                       multiline: true,
-                      rows: 5
+                      rows: 5,
+                      value: "I'm a nice fun and friendly person, I'm honest and punctual, I work well in a team but also on my own",
+                      disabled: true
                     }}
                   />
                 </GridItem>
               </GridContainer>
             </CardBody>
             <CardFooter>
-              <Button color="primary">Update Profile</Button>
+              <Button color="primary" onClick={handleUpdate}>Update Profile</Button>
             </CardFooter>
           </Card>
         </GridItem>

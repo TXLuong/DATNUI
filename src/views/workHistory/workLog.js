@@ -21,6 +21,7 @@ import Accessibility from "@material-ui/icons/Accessibility";
 import UserTable from '../../components/WorkLog/UserTable';
 import DateSelector from '../../components/WorkLog/DatePicker';
 import SeeButton from '../../components/WorkLog/SeeButton';
+import {useHistory} from 'react-router-dom';
 import {authPost} from '../../api';
 import {useDispatch, useSelector} from 'react-redux'
 // thoi gian turn in 
@@ -38,6 +39,7 @@ const useStyleForDate = makeStyles({
 
 export default function WorkLog(){
     const classes = useStyles();
+    const history = useHistory();
     const classDate = useStyleForDate();
     const [name, setName] = useState("null");
     const [timeIn, setTimeIn] = useState("null")
@@ -88,7 +90,12 @@ export default function WorkLog(){
       
 
     }, []);
-
+    const handleLogout = () => {
+      window.history.replaceState(null, null, "/login");
+      localStorage.clear("TOKEN");
+      localStorage.clear("roleid");
+      location.reload();
+    }
     return (
         <div>
             <GridContainer>
@@ -176,7 +183,8 @@ export default function WorkLog(){
       <div className = {classDate.listDate}>
         <SeeButton onClick={handleSeeHistory}>See history</SeeButton>
         <DateSelector changeDate = {handleChangeDateFrom} label="From"/>
-        <DateSelector changeDate = {handleChangeDateTo} label="To"/>       
+        <DateSelector changeDate = {handleChangeDateTo} label="To"/>    
+        <SeeButton onClick={handleLogout}>Logout</SeeButton>   
       </div>
       <UserTable rows = {rows}></UserTable>
       </div>

@@ -35,6 +35,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import Routes from "Routes";
 import SignInContainer from './container/SignInContainer';
 import appReducer from './reducers/index';
+import {LOGOUT_SUCCESS} from '../src/action/Auth';
 const blazeface = require("@tensorflow-models/blazeface");
 
 console.log("blaze face is awesome", blazeface);

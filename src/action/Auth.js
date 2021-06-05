@@ -13,6 +13,42 @@ export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const ERROR = "ERROR";
 
+export const logout = () => {
+    return (dispatch, getState) => {
+      dispatch(requesting()); // create a action
+      const headers = new Headers();
+  
+  
+      headers.append("Content-Type", "application/json");
+      headers.append("X-Auth-Token", getState().auth.token);
+  
+      fetch(`${API_URL}/logout`, {
+        method: "GET",
+        headers: headers
+      })
+        .then(res => {
+          if (res.ok) {
+            dispatch(logoutsuccess());
+          }
+          return res.json();
+        })
+        .then(
+          res => {
+            // if (res.status === "SUCCESS") {
+            //     dispatch(success());
+            // } else{
+            //     dispatch(failed());
+            // }
+          },
+          error => {
+            dispatch(failed());
+          }
+        );
+    };
+  
+  }
+  
+
 export const login = (username, password) =>{
     const body = {
         username : username,
@@ -113,3 +149,4 @@ const errorNoti = (message, autoClose) => {
       progress: undefined,
     }
 )};
+

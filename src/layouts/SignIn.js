@@ -31,8 +31,18 @@ function Copyright() {
 const useStyleForBackground = makeStyles((theme) => ({
   container: {
     color  : 'red',
+    backgroundColor : "green", 
+  },
+  image : {
+    position: "absolute",
+    width: "100vw",
+    height: "100vh",
+    top : 0,
+    bottom : 0, 
+  },
+  link : {
+    color : "green",
   }
-
 }))
 
 const useStyles = makeStyles((theme) => ({
@@ -83,13 +93,15 @@ export default function SignIn(props) {
       )
     }
     else if (props.roleid == '2') {
+      console.log("employee is ready");
       return (
         <Redirect to='/employee'/>
       );
     }
   }
   else return (
-  <div className={classesForBackground.container}>
+  <div>
+    <img alt = "welcome" src = {backGroundImage} className = {classesForBackground.image}></img>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -140,7 +152,7 @@ export default function SignIn(props) {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link href="#" variant="body2" className={classesForBackground.link}>
                 Forgot password?
               </Link>
             </Grid>

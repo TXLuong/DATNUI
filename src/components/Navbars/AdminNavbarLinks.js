@@ -25,7 +25,7 @@ import {authPost} from '../../api';
 import {Redirect} from 'react-router-dom';
 const useStyles = makeStyles(styles);
 
-export default function AdminNavbarLinks() {
+export default function AdminNavbarLinks(props) {
   var logouted = false;
   const classes = useStyles();
   const [openNotification, setOpenNotification] = React.useState(null);
@@ -54,11 +54,18 @@ export default function AdminNavbarLinks() {
     setOpenProfile(null);
   };
   const handleLogout = () => {
-    authPost(dispatch, token, "/logout");
+    // authPost(dispatch, token, "/logout");
+    alert("logout");
     logouted = true;
+    window.history.replaceState(null, null, "/login");
+    localStorage.clear("TOKEN");
+    localStorage.clear("roleid");
+    location.reload();
   }
-  return (
-    logouted?(<Redirect to="/login"></Redirect>):
+  if(logouted) {
+    return (<Redirect to="/login"></Redirect>)
+  }
+  else return (
     (
       <div>
       <div className={classes.searchWrapper}>
