@@ -26,8 +26,8 @@ const StyledTableRow = withStyles ((theme) => ({
 	},
 }))(TableRow);
 
-function createData (name, timeIn, timeOut, totalTime, day){
-	return {name, timeIn, timeOut, totalTime, day}
+function createData (day, timeIn, timeOut, totalTime){
+	return {day, timeIn, timeOut, totalTime}
 }
 const rows = [
 	createData("Alex", "8h10", "18h10", "8h", "4-5-2021"),
@@ -51,22 +51,22 @@ export default function UserTable (props) {
         <TableHead>
           <TableRow>
             <StyledTableCell>Day</StyledTableCell>
-            <StyledTableCell align="right">Time in</StyledTableCell>
-            <StyledTableCell align="right">Time out</StyledTableCell>
-            <StyledTableCell align="right">Total time &nbsp;(hour)</StyledTableCell>
-            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+            <StyledTableCell align="center">Time in</StyledTableCell>
+            <StyledTableCell align="center">Time out</StyledTableCell>
+            <StyledTableCell align="center">Total time &nbsp;(hour)</StyledTableCell>
+            {/* <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          {props.rows.map((row) => (
+            <StyledTableRow key={row.day}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                {row.day}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              <StyledTableCell align="center">{row.timeIn}</StyledTableCell>
+              <StyledTableCell align="center">{row.timeOut}</StyledTableCell>
+              <StyledTableCell align="center">{row.totalTime}</StyledTableCell>
+              {/* <StyledTableCell align="right">{row.protein}</StyledTableCell> */}
             </StyledTableRow>
           ))}
         </TableBody>

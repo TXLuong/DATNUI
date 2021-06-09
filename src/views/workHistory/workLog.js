@@ -50,15 +50,10 @@ export default function WorkLog(){
     const [to, setTo] = useState(new Date().toLocaleString().split(',')[0]);
     const token = useSelector(state => state.auth.token);
     const dispatch = useDispatch();
-    const createData =  (name, timeIn, timeOut, totalTime, day) => {
-      {name, timeIn, timeOut, totalTime, day}
+    const createData =  (day, timeIn, timeOut, totalTime) => {
+      return {day, timeIn, timeOut, totalTime }
     }
-    const rows = [
-      createData("Alex", "8h10", "18h10", "8h", "4-5-2021"),
-      createData("Alex", "8h10", "18h10", "8h", "4-5-2021"),
-      createData("Alex", "8h10", "18h10", "8h", "4-5-2021"),
-      createData("Alex", "8h10", "18h10", "8h", "4-5-2021")
-    ];
+    const [rows, setRows] = useState([]);
 
     // nhan du lieu tu server 
     // truyen du lieu dang props vao trong usertable 
@@ -69,27 +64,24 @@ export default function WorkLog(){
     const handleChangeDateTo = (dateTo) => {
       setTo(dateTo);
     }
-    const handleSeeHistory = async () => {
+    const handleSeeHistory = () => {
       // send to server toke + dateFrom + dateTo
       console.log(from + " " + to);
-      const body = {
+      let body = {
         "dateFrom": from,
         "dateTo": to
       }
-      authPost(dispatch, token,"/user/history",body);
+      authPost(dispatch, token,"/employee/history",body).then(
+        (res) => {
+          let rows_res = [];
+          let arr = res.rows;
+          for (let i = 0; i < arr.length; i++){
+            rows_res[i] = createData(arr[i].day, arr[i].time_in, arr[i].time_out, arr[i].sum_time)
+          }
+          setRows(rows_res);
+        }
+      );
     }
-    const sendToServerAndRender = async () => {
-      let data = {
-        "from" : from,
-        "to" : to
-      }
-      authPost(dispatch, token, "/user/seeWork", data);
-    }
-    useEffect(() => {
-      console.log(from + " " + to);
-      
-
-    }, []);
     const handleLogout = () => {
       window.history.replaceState(null, null, "/login");
       localStorage.clear("TOKEN");
@@ -99,35 +91,6 @@ export default function WorkLog(){
     return (
         <div>
             <GridContainer>
-        <GridItem xs={12} sm={6} md={3}>
-          <Card>
-            <CardHeader color="warning" stats icon>
-              <CardIcon color="warning">
-                <Icon>content_copy</Icon>
-              </CardIcon>
-              <p className={classes.cardCategory}>Today</p>
-              <h3 className={classes.cardTitle}>
-                3/8 <small>hour</small>
-              </h3>
-            </CardHeader>
-            {/* <CardFooter stats>
-              <div className={classes.stats}>
-                <Danger>
-                  <Warning />
-                </Danger>
-                <a href="#pablo" onClick={e => e.preventDefault()}>
-                  Get more space
-                </a>
-              </div>
-            </CardFooter> */}
-             <CardFooter stats>
-              <div className={classes.stats}>
-                <DateRange />
-                Until now
-              </div>
-            </CardFooter>
-          </Card>
-        </GridItem>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
             <CardHeader color="success" stats icon>
@@ -184,7 +147,7 @@ export default function WorkLog(){
         <SeeButton onClick={handleSeeHistory}>See history</SeeButton>
         <DateSelector changeDate = {handleChangeDateFrom} label="From"/>
         <DateSelector changeDate = {handleChangeDateTo} label="To"/>    
-        <SeeButton onClick={handleLogout}>Logout</SeeButton>   
+        {/* <SeeButton onClick={handleLogout}>Logout</SeeButton>    */}
       </div>
       <UserTable rows = {rows}></UserTable>
       </div>

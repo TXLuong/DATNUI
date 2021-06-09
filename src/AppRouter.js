@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import {BrowserRouter as Router, Link, Redirect, Route, Switch } from 'react-router-dom';
 import Admin from './layouts/Admin';
 import SignIn from './layouts/SignIn';
 import SignInContainer from './container/SignInContainer';
@@ -16,6 +16,9 @@ export default function AppRouter() {
                 </Route>
                 <Route path = '/login'>
                     <SignInContainer/>
+                </Route>
+                <Route path = ''>
+                    <Redirect to = "/login"></Redirect>
                 </Route>
             </Switch>
         </Router>

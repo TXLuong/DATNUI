@@ -55,12 +55,14 @@ export default function AdminNavbarLinks(props) {
   };
   const handleLogout = () => {
     // authPost(dispatch, token, "/logout");
-    alert("logout");
-    logouted = true;
-    window.history.replaceState(null, null, "/login");
-    localStorage.clear("TOKEN");
-    localStorage.clear("roleid");
-    location.reload();
+    if(confirm("Do you want to logout?")){
+      logouted = true;
+      window.history.replaceState(null, null, "/login");
+      localStorage.clear("TOKEN");
+      localStorage.clear("roleid");
+      location.reload();
+    };
+    
   }
   if(logouted) {
     return (<Redirect to="/login"></Redirect>)

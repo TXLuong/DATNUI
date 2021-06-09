@@ -14,7 +14,7 @@ import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import {useState, useEffect} from "react";
 import avatar from "assets/img/faces/marc.jpg";
-import {authGet} from '../../api';
+import {authGet, authPost} from '../../api';
 import {useSelector, useDispatch} from "react-redux";
 import CamHtml from "components/Cam/CamHtml";
 const styles = {
@@ -44,11 +44,17 @@ export default function UserProfile() {
   const [lastname, setLastname] = useState("");
   const [id, setId] = useState("");
   const [role, setRole] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
   const classes = useStyles();
   const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
+  const roleid = useSelector(state => state.auth.roleid);
   const getMonitor = ()=>{
-    authGet(dispatch, token, "/monitor/current").then(
+
+    if(roleid == 1) { authPost(dispatch, token, "/current", "Monitor").then(
       res =>{
         console.log("res ---------- ", res);
         if (res != null) {
@@ -65,17 +71,87 @@ export default function UserProfile() {
         }
       }
     );
+    }
+    else{
+      authPost(dispatch, token, "/current", "Employee").then(
+        res =>{
+          console.log("res ---------- ", res);
+          if (res != null) {
+            setFirstname(res.firstname);
+            setLastname(res.lastname);
+            setId(res.id);
+            if(res.roleid == 1) {
+              setRole("Monitor");
+            }
+            else {
+              setRole("Employee");
+            }
+            setEmail(res.email);
+          }
+        }
+      );
+    }
   }
-  const handleUpdate = () => {
-
+  const handleFirstname = (e) => {
+    setFirstname(e.target.value)
+  }
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+  }
+  const handleLastname = (e) =>{
+    setLastname(e.target.value);
+  }
+  const handleOldPassWord = (e) => {
+    console.log("fill old password");
+    setOldPassword(e.target.value);
+  }
+  const handleNewPassWord = (e) =>{
+    setNewPassword(e.target.value);
+  }
+  const handleConfirmPassWord = (e) => {
+    setConfirmPassword(e.target.value);
+    console.log(confirmPassword)
+  }
+  const change_password = () => {
+    if(newPassword != confirmPassword){
+      setError("Passwords don't match.")
+      return false;
+    }
+    setError("");
+    console.log("change password");
+    let data = {
+      "role" : role,
+      "id" : id,
+      "oldPassword" : oldPassword,
+      "newPassword" : newPassword,
+    }
+    authPost(dispatch, token, "/password", data).then(response =>{
+      console.log(response);
+      if (response.message == "error occured"){
+        alert("error occured when change password");
+        return ;
+      }
+      alert("Change password success");
+    });
   }
   useEffect(() =>{
     getMonitor();
   },[]);
+  const handlUpdate = () =>{
+    let data = {
+      "role" : role,
+      "firstname" : firstname,
+      "lastname" : lastname,
+      "email" : email,  
+      "id" : id
+    }
+    authPost(dispatch, token,"/profile",data);
+  }
   document.getElementById("mutualCamera").innerHTML = "<CamHtml/>" ;
   return (
     <div>
       <GridContainer>
+
         <GridItem xs={12} sm={12} md={8}>
           <Card>
             <CardHeader color="primary">
@@ -141,10 +217,10 @@ export default function UserProfile() {
                     }}
                     inputProps = {
                       {
-                        value : firstname
+                        value : firstname,
+                        onChange : handleFirstname
                       }
                     }
-                    onChange={() => console.log("Role changed")}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
@@ -156,7 +232,8 @@ export default function UserProfile() {
                     }}
                     inputProps = {
                       {
-                        value : lastname
+                        value : lastname,
+                        onChange : handleLastname
                       }
                     }
                   />
@@ -172,7 +249,8 @@ export default function UserProfile() {
                     }}
                     inputProps = {
                       {
-                        value : email
+                        value : email,
+                        onChange : handleEmail
                       }
                     }
                   />
@@ -228,7 +306,7 @@ export default function UserProfile() {
               </GridContainer>
             </CardBody>
             <CardFooter>
-              <Button color="primary" onClick={handleUpdate}>Update Profile</Button>
+              <Button color="primary" onClick={handlUpdate} >Update Profile</Button>
             </CardFooter>
           </Card>
         </GridItem>
@@ -253,7 +331,58 @@ export default function UserProfile() {
             </CardBody>
           </Card>
         </GridItem> */}
-      </GridContainer>
+        
+        <GridItem item xs={2}> 
+        <>
+                <CustomInput
+                    labelText="Old Password"
+                    id="old-password"
+                    formControlProps={{
+                      fullWidth: true 
+                    }}
+                    inputProps = {
+                      {
+                        value: oldPassword,
+                        type : "password",
+                        onChange: handleOldPassWord,
+                        autoComplete : "off"
+                      }
+                    }
+                  />
+                  <CustomInput
+                    labelText="New Password"
+                    id="new-password"
+                    formControlProps={{
+                      fullWidth: true 
+                    }}
+                    inputProps = {
+                      {
+                        value: newPassword,
+                        type : "password",
+                        onChange : handleNewPassWord
+                      }
+                    }
+                  />
+                  <CustomInput
+                    labelText="Confirm Password"
+                    id="confirm-password"
+                    formControlProps={{
+                      fullWidth: true 
+                    }}
+                    inputProps = {
+                      {
+                        value: confirmPassword,
+                        type : "password",
+                        onChange : handleConfirmPassWord
+                      }
+                    }
+                  />
+            </>
+            <div style={{color: "red"}}>{error}</div>        
+          <Button color="primary" onClick = {change_password}>Change password</Button>
+        </GridItem> 
+    </GridContainer>
+      
     </div>
   );
 }
