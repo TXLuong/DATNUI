@@ -75,6 +75,10 @@ export default function WorkLog(){
         (res) => {
           let rows_res = [];
           let arr = res.rows;
+          if(arr == null){
+            alert("Don't have any entry in those days !");
+            return ;
+          }
           for (let i = 0; i < arr.length; i++){
             rows_res[i] = createData(arr[i].day, arr[i].time_in, arr[i].time_out, arr[i].sum_time)
           }
